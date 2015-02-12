@@ -24,7 +24,7 @@ var postToSlack = function (params) {
   var user = params.user;
   var channel = params.channel;
   var imageURL = params.imageURL;
-  var keyword = params.keyword;
+  var query = params.query;
 
   if (typeof user !== 'string') {
     throw new Error('`user` must be a string; got ' + channel);
@@ -38,8 +38,8 @@ var postToSlack = function (params) {
     throw new Error('`imageURL` must be a string; got ' + channel);
   }
 
-  if (typeof keyword !== 'string') {
-    throw new Error('`keyword` must be a string; got ' + channel);
+  if (typeof query !== 'string') {
+    throw new Error('`query` must be a string; got ' + channel);
   }
 
   if (channel === 'directmessage') {
@@ -54,8 +54,8 @@ var postToSlack = function (params) {
     icon_url: ICON_URL,
     attachments: [{
       fallback: 'Random creation on Mix',
-      pretext: '@' + user + ' would like to share this random creation of *' +
-        params.author + '*',
+      pretext: '@' + user + ' searched for _' + query + '_ to share this ' +
+        'random creation of *' + params.author + '*',
       image_url: imageURL
     }]
   };
@@ -91,9 +91,10 @@ app.post('/random-creation', function (req, res) {
 
   console.log('Received payload:', req.body);
 
-  var user = req.body.text;
+  var query = req.body.text;
   Request.get({
-    url: 'https://mix-internal-api.fiftythree.com/users/' + user + '/creations',
+    url: 'https://mix-internal-api.fiftythree.com/users/search?q=' +
+      encodeURIComponent(query) + '&include=creations*100',
     json: true
   }, function (error, response) {
       if (error) {
@@ -107,7 +108,12 @@ app.post('/random-creation', function (req, res) {
         return;
       }
 
-      var creations = response.body.items;
+      if (response.body.items.length === 0) {
+        res.status(200).send('Couldn’t find users for query ‘' + query + '’.');
+        return;
+      }
+
+      var creations = response.body.items[0].creations.items;
 
       if (!Array.isArray(creations)) {
         res.status(400).send('Unexpected Mix API response: ' +
@@ -121,7 +127,7 @@ app.post('/random-creation', function (req, res) {
       postToSlack({
         channel: req.body.channel_name,
         imageURL: randomImageURL,
-        keyword: user,
+        query: query,
         user: req.body.user_name,
         author: randomCreation.creator.fullName
       });
