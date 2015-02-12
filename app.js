@@ -54,10 +54,10 @@ var postToSlack = function (params) {
     icon_url: ICON_URL,
     attachments: [{
       fallback: 'Random creation on Mix',
+      pretext: '@' + user + ' searched for ‘' + query + '’ to share this ' +
+        'random creation of ' + params.creator.fullName + '.',
       author_name: params.creator.fullName,
       author_link: params.creator.wwwURL,
-      text: '@' + user + ' searched for _' + query + '_ to share this ' +
-        'random creation of *' + params.creator.fullName + '*.',
       image_url: imageURL
     }]
   };
