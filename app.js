@@ -11,6 +11,23 @@ if (!process.env.SLACK_VERIFICATION_TOKEN) {
 var SLACK_VERIFICATION_TOKEN = process.env.SLACK_VERIFICATION_TOKEN;
 
 
+// Helpers
+var postToSlack = (channel, imageURL) ->
+  var payload = '<' + imageURL + '>';
+
+  var options = {
+    url: 'https://' + process.env.SLACK_ACCOUNT +
+      '.slack.com/services/hooks/incoming-webhook?token=' +
+      process.env.SLACK_WEBHOOK_TOKEN,
+    method: 'POST',
+    json: {
+      channel: '#' + channel,
+      text: payload
+    }
+  };
+
+  Request(options);
+
 // App
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -52,7 +69,7 @@ app.post('/random-creation', function (req, res) {
       var randomCreation = creations[randomIndex];
       var randomImageURL = randomCreation.imageURLs['512x384/jpeg'];
 
-      res.send('<' + randomImageURL + '>');
+      postToSlack(req.body.channel, randomImageURL);
   });
 });
 
