@@ -1,0 +1,29 @@
+{
+  "name": "slack-fiftythree-mix",
+  "private": "true",
+  "version": "0.0.0",
+  "description": "Slack `/mix` command.",
+  "main": "app.js",
+  "dependencies": {
+    "body-parser": "^1.11.0",
+    "express": "^4.0.0",
+    "request": "^2.53.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gasi/slack-mix"
+  },
+  "keywords": [
+    "mix",
+    "slack",
+    "fiftythree",
+    "integration",
+    "command"
+  ],
+  "author": "Daniel Gasienica <daniel@gasienica.ch>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gasi/slack-mix/issues"
+  },
+  "homepage": "https://github.com/gasi/slack-mix"
+}
