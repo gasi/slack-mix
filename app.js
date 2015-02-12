@@ -52,7 +52,7 @@ app.post('/random-creation', function (req, res) {
       var randomCreation = creations[randomIndex];
       var randomImageURL = randomCreation.imageURLs['512x384/jpeg'];
 
-      res.send(randomImageURL);
+      res.send('<' + randomImageURL + '>');
   });
 });
 
