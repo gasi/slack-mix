@@ -38,6 +38,7 @@ var postToSlack = function (channel, imageURL) {
     }
   };
 
+  console.log('Post to Slack webhook:', options);
   Request(options);
 };
 
