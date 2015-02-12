@@ -53,7 +53,6 @@ var postToSlack = function (params) {
 
   var payload = {
     channel: channel,
-    text: text,
     username: 'Mix',
     icon_url: ICON_URL
   };
