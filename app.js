@@ -76,6 +76,7 @@ app.post('/random-creation', function (req, res) {
       var randomImageURL = randomCreation.imageURLs['512x384/jpeg'];
 
       postToSlack(req.body.channel, randomImageURL);
+      res.send(200);
   });
 });
 
