@@ -42,9 +42,6 @@ var postToSlack = function (params) {
     throw new Error('`keyword` must be a string; got ' + channel);
   }
 
-  var text = '@' + user + ' would like to share <' + imageURL + '|one of *' +
-    keyword +'’s* creations>';
-
   if (channel === 'directmessage') {
     channel = '@' + user;
   } else {
@@ -54,7 +51,13 @@ var postToSlack = function (params) {
   var payload = {
     channel: channel,
     username: 'Mix',
-    icon_url: ICON_URL
+    icon_url: ICON_URL,
+    attachments: [{
+      fallback: 'Random creation on Mix',
+      pretext: '@' + user + ' would like to share this random creation of *' +
+        params.author + '*',
+      image_url: imageURL
+    }]
   };
 
   var options = {
@@ -120,6 +123,7 @@ app.post('/random-creation', function (req, res) {
         imageURL: randomImageURL,
         keyword: user,
         user: req.body.user_name,
+        author: randomCreation.creator.fullName
       });
       res.send(200);
   });
