@@ -61,6 +61,8 @@ app.post('/random-creation', function (req, res) {
     return;
   }
 
+  console.log('Received payload:', req.body);
+
   var user = req.body.text;
   Request.get({
     url: 'https://mix-internal-api.fiftythree.com/users/' + user + '/creations',
