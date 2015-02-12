@@ -59,7 +59,8 @@ app.post('/random-creation', function (req, res) {
       }
 
       if (response.statusCode !== 200) {
-        res.status(400).send('Unexpected status code from Mix API: ' + response.statusCode);
+        res.status(400).send('Unexpected status code from Mix API: ' +
+            response.statusCode);
         return;
       }
 
