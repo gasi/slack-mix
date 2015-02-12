@@ -113,7 +113,7 @@ app.post('/random-creation', function (req, res) {
 
       var randomIndex = Math.floor(Math.random() * creations.length);
       var randomCreation = creations[randomIndex];
-      var randomImageURL = randomCreation.imageURLs['512x384/jpeg'];
+      var randomImageURL = randomCreation.imageURLs['1024x768/jpeg'];
 
       postToSlack({
         channel: req.body.channel_name,
