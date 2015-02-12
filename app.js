@@ -2,17 +2,24 @@ var bodyParser = require('body-parser');
 var express = require('express');
 var Request = require('request');
 
+var REQUIRED_ENVIRONMENT_VARIABLES = [
+  'SLACK_ACCOUNT',
+  'SLACK_WEBHOOK_TOKEN',
+  'SLACK_VERIFICATION_TOKEN'
+];
 
-if (!process.env.SLACK_VERIFICATION_TOKEN) {
-  throw new Error('`SLACK_VERIFICATION_TOKEN` environment variable required.');
-}
+REQUIRED_ENVIRONMENT_VARIABLES.forEach(function (variable) {
+  if (!process.env[variable]) {
+    throw new Error('`' + variable + '` environment variable required.');
+  }
+});
 
 // Constants
 var SLACK_VERIFICATION_TOKEN = process.env.SLACK_VERIFICATION_TOKEN;
 
 
 // Helpers
-var postToSlack = (channel, imageURL) ->
+var postToSlack = function (channel, imageURL) {
   var payload = '<' + imageURL + '>';
 
   var options = {
@@ -27,6 +34,7 @@ var postToSlack = (channel, imageURL) ->
   };
 
   Request(options);
+};
 
 // App
 var app = express();
