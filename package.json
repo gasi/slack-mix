@@ -25,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/gasi/slack-mix/issues"
   },
-  "homepage": "https://github.com/gasi/slack-mix"
+  "homepage": "https://github.com/gasi/slack-mix",
+  "engines": {
+    "node": "0.10.x"
+  }
 }
