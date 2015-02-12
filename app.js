@@ -37,6 +37,10 @@ var postToSlack = function (channel, imageURL) {
 var app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
+app.get('/', function (req, res) {
+  res.send('Hello, I am Slack Mix bot.');
+});
+
 app.post('/random-creation', function (req, res) {
   if (req.body.token !== SLACK_VERIFICATION_TOKEN) {
     res.status(403).send('Invalid Slack verification token.');
