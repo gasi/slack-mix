@@ -19,6 +19,14 @@ var SLACK_VERIFICATION_TOKEN = process.env.SLACK_VERIFICATION_TOKEN;
 
 // Helpers
 var postToSlack = function (channel, imageURL) {
+  if (typeof channel !== 'string') {
+    throw new Error('`channel` must be a string; got ' + channel);
+  }
+
+  if (typeof imageURL !== 'string') {
+    throw new Error('`imageURL` must be a string; got ' + channel);
+  }
+
   var payload = '<' + imageURL + '>';
 
   var options = {
