@@ -3,8 +3,7 @@ var express = require('express');
 var Request = require('request');
 
 var REQUIRED_ENVIRONMENT_VARIABLES = [
-  'SLACK_ACCOUNT',
-  'SLACK_WEBHOOK_TOKEN',
+  'SLACK_WEBHOOK_URL',
   'SLACK_VERIFICATION_TOKEN'
 ];
 
@@ -23,9 +22,7 @@ var postToSlack = function (channel, imageURL) {
   var payload = '<' + imageURL + '>';
 
   var options = {
-    url: 'https://' + process.env.SLACK_ACCOUNT +
-      '.slack.com/services/hooks/incoming-webhook?token=' +
-      process.env.SLACK_WEBHOOK_TOKEN,
+    url: process.env.SLACK_WEBHOOK_URL,
     method: 'POST',
     json: {
       channel: '#' + channel,
