@@ -54,8 +54,10 @@ var postToSlack = function (params) {
     icon_url: ICON_URL,
     attachments: [{
       fallback: 'Random creation on Mix',
+      author_name: params.creator.fullName,
+      author_link: params.creator.wwwURL,
       text: '@' + user + ' searched for _' + query + '_ to share this ' +
-        'random creation of *' + params.author + '*.',
+        'random creation of *' + params.creator.fullName + '*.',
       image_url: imageURL
     }]
   };
@@ -129,7 +131,7 @@ app.post('/random-creation', function (req, res) {
         imageURL: randomImageURL,
         query: query,
         user: req.body.user_name,
-        author: randomCreation.creator.fullName
+        creator: randomCreation.creator
       });
       res.send(200);
   });
